@@ -121,3 +121,71 @@ def set_column_types(table_name: str, by_number=True, *types_dict:str):
 
         except IndexError:
             return 'Error'
+def get_values(table_name, column=0):
+    with open(table_name, 'r', encoding='utf-8') as f:
+        values = {}
+        clmn = []
+        table = f.readlines()
+
+        for i in range(len(table[0].split(','))):
+            for j in table[1:]:
+                clmn.append(j.split(',')[i].strip('"\n""\t"'))
+            if type(column) == int:
+                values[i + 1] = clmn
+
+            else:
+                values[table[0].split(',')[i].strip('"\n""\t"')] = clmn
+
+            clmn = []
+        return values[column]
+#print(get_values('test_txt',column='Возраст'))
+
+
+def get_value(table_name, column=0):
+    with open(table_name, 'r', encoding='utf-8') as f:
+        values = {}
+        clmn = []
+        table = f.readlines()
+
+        for i in range(len(table[0].split(','))):
+            for j in table[1:]:
+                clmn.append(j.split(',')[i].strip('"\n""\t"'))
+            if type(column) == int:
+                values[i + 1] = clmn
+
+            else:
+                values[table[0].split(',')[i].strip('"\n""\t"')] = clmn
+
+            clmn = []
+        return values[column]
+
+
+def set_values(table_name, column=0,*values):
+    with open(table_name, 'r', encoding='utf-8') as f:
+        values = {}
+        clmn = []
+        table = f.readlines()
+
+        for i in range(len(table[0].split(','))):
+            for j in table[1:]:
+                clmn.append(j.split(',')[i].strip('"\n""\t"'))
+            if type(column) == int:
+                values[i + 1] = clmn
+
+            else:
+                values[table[0].split(',')[i].strip('"\n""\t"')] = clmn
+
+            clmn = []
+    with open(f'{table_name}_fnction_test', 'w', encoding='utf-8') as f:
+        temp = list(values.values())
+        string = ''
+        for c in list(values.keys()):
+            string += c + ','
+        f.write(f'{string.strip(",")}\n')
+        string = ''
+
+        for j in range(len(list(values.keys()))):
+            for i in range(len(list(values.keys()))):
+                string += temp[i][j] + ','
+            f.write(f'{string.strip(",")}\n')
+            string=''
